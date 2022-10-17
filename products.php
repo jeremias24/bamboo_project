@@ -349,7 +349,7 @@ $products = $stmt->fetchAll();
       var id = $(this).data('id');
       console.log(id)
 
-      // var table = $('#cart_table').DataTable();
+      var table = $('#cart_table').DataTable();
 
 
       // console.log(table.rows({
