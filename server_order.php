@@ -37,7 +37,8 @@ foreach ($result as $row) {
         <td>  ' . '$' . number_format((float) $row['cart_price'], 2, '.', '') . '</td> 
         <td>  ' . '$' . number_format((float)$row['qty'] * $row['cart_price'], 2, '.', '') . '</td> 
         <td>
-        <button class="btn btn-danger btn-sm cancel" id="cancel" data-id="' . $row['cart_id'] . '" > Cancel </button> 
+        <button class="btn btn-warning btn-sm cancel" id="cancel" data-id="' . $row['cart_id'] . '" > Cancel </button> 
+        <button class="btn btn-danger btn-sm cancel" id="checkout" data-id="' . $row['cart_id'] . '" > Checkout </button> 
       
         </td>
       </tr>';
