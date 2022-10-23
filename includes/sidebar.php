@@ -1,22 +1,19 @@
 <div class="sidebar" id="sidebar">
-                <div class="sidebar-inner slimscroll">
-					<div id="sidebar-menu" class="sidebar-menu">
-						<ul>
-							
-							
-							<li class="menu-title"> 
-								<span><?php echo $_SESSION['UserType'];?> Dashboard</span>
-							</li>
-							<li> 
-							<a href="home.php"><i class="la la-dashboard"></i> <span> Dashboard</span></a>
-							</li>
-							<?php 
-								if ($_SESSION['UserType'] === 'Administrator'){
-									echo '
-										<li>
-										<a href="user-list.php"><i class="la la-user"></i> <span>User Management</span></span></a>
-											
-										</li>
+    <div class="sidebar-inner slimscroll">
+		<div id="sidebar-menu" class="sidebar-menu">
+			<ul>
+				<li class="menu-title"> 
+					<span><?php echo $_SESSION['UserType'];?> Dashboard</span>
+				</li>
+				<li> 
+					<a href="home.php"><i class="la la-dashboard"></i> <span> Home</span></a>
+				</li>
+					<?php 
+						if ($_SESSION['UserType'] === 'Administrator'){
+							echo '
+								<li>
+									<a href="user-list.php"><i class="la la-user"></i> <span>User Management</span></span></a>
+								</li>
 									';
 								}
 							?>
@@ -43,29 +40,29 @@
 								}
 							?>
 
-<?php 
-								if (1 === 1){
-									echo '
-									<li>
-									<a href="orders.php"><i class="la la-users"></i> <span>Orders</span></a>
-									
-								</li>
-									';
-								}
-							?>
+
 
 <?php 
 								if (1 === 1){
 									echo '
 									<li>
-									<a href="products.php"><i class="la la-users"></i> <span>Products</span></a>
+									<a href="products.php"><i class="la la-users"></i> <span>My Cart</span></a>
 									
 								</li>
 									';
 								}
 							?>
 							
-							
+							<?php 
+								if (1 === 1){
+									echo '
+									<li>
+									<a href="orders.php"><i class="la la-users"></i> <span>My Orders</span></a>
+									
+								</li>
+									';
+								}
+							?>
 							
 							<!-- <li class="submenu">
 								<a href="#"><i class="la la-rocket"></i> <span> Projects</span> <span class="menu-arrow"></span></a>
