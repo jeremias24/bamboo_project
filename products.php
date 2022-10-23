@@ -1,35 +1,26 @@
-<?php
-session_start();
-include('includes/config.php');
+<?php session_start(); 
+  include('includes/config.php');
+  error_reporting(0);
+  include('server_cart.php');
+  date_default_timezone_set('Asia/Manila');
+  $date = date('Y-m-d h:i:s', time());
 
-?>
-<?php
-error_reporting(0);
-//Setting session start
-session_start();
-include('server_cart.php');
-date_default_timezone_set('Asia/Manila');
-$date = date('Y-m-d h:i:s', time());
-//Database connection, replace with your connection string.. Used PDO
-$conn = new PDO("mysql:host=localhost;dbname=bamboo", 'root', '');
-$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+  //Database connection, replace with your connection string.. Used PDO
+  $conn = new PDO("mysql:host=localhost;dbname=bamboo", 'root', '');
+  $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 
-//Empty All
-if ($action == 'emptyall') {
-  $_SESSION['products'] = array();
-  header("Location:products.php");
-}
+  //Empty All
+  if ($action == 'emptyall') {
+    $_SESSION['products'] = array();
+    header("Location:products.php");
+  }
 
-//get action string
-$action = isset($_GET['action']) ? $_GET['action'] : "";
+  //get action string
+  $action = isset($_GET['action']) ? $_GET['action'] : "";
 
-
-
-//Add to cart
-if ($action == 'addcart' && $_SERVER['REQUEST_METHOD'] == 'POST') {
-
-
+  //Add to cart
+  if ($action == 'addcart' && $_SERVER['REQUEST_METHOD'] == 'POST') {
 
   //Finding the product by code
   $query = "SELECT * FROM products WHERE sku=:sku";
@@ -38,9 +29,7 @@ if ($action == 'addcart' && $_SERVER['REQUEST_METHOD'] == 'POST') {
   $stmt->execute();
   $product = $stmt->fetch();
 
-
   $_SESSION['products'][$_POST['sku']] = array('qty' => $currentQty, 'name' => $product['name'], 'image' => $product['image'], 'price' => $product['price']);
-
 
   $id = $_SESSION['id'];
   $sku = $_POST['sku'];
@@ -58,7 +47,7 @@ if ($action == 'addcart' && $_SERVER['REQUEST_METHOD'] == 'POST') {
   $stmt->execute();
 
 
-  header("Location:products.php");
+  header("Location:home.php");
 }
 
 
@@ -124,35 +113,14 @@ $products = $stmt->fetchAll();
     <!-- Page Wrapper -->
     <div class="page-wrapper">
 
-      <!-- Page Content -->
-      <div class="content container-fluid">
-
-        <!-- Page Header -->
-        <?php if ($_SESSION['UserType'] === 'Seller') {
-          echo '
-                            <div class="page-header">
-                                <div class="col-auto float-right ml-auto">
-                                        <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_client"><i class="fa fa-plus"></i> Add Product</a>
-                                        <div class="view-icons">
-                                            <a href="clients.php" class="grid-view btn btn-link"><i class="fa fa-th"></i></a>
-                                            <a href="clients-list.php" class="list-view btn btn-link active"><i class="fa fa-bars"></i></a>
-                                        </div>
-                                    </div>
-                            </div>
-                        ';
-        }
-
-        ?>
-
-      </div>
+    
       <!-- /Page Header -->
 
       <div class="container-fluid" style="width:100%;">
 
         <nav class="navbar navbar-inverse" style="background:#04B745;">
-          <div class="container-fluid pull-left" style="width:300px;">
             <div class="navbar-header"> <a class="navbar-brand" href="#" style="color:#FFFFFF;">Shopping Cart</a> </div>
-          </div>
+          
           <div class="pull-right" style="margin-top:7px;margin-right:7px;"><a href="javascript:void(0)" class="btn btn-info" id="empty_cart">Empty cart</a></div>
         </nav>
 
@@ -190,30 +158,7 @@ $products = $stmt->fetchAll();
 
 
 
-        <nav class="navbar navbar-inverse" style="background:#04B745;">
-          <div class="container-fluid">
-            <div class="navbar-header"> <a class="navbar-brand" href="#" style="color:#FFFFFF;">Products</a> </div>
-          </div>
-        </nav><br />
-        <div class="row">
-          <div class="container-fluid" style="width:100%;">
-
-            <?php foreach ($products as $product) : ?>
-              <div class="col-md-3" style="float:left;">
-                <div class="thumbnail"> <img src="<?php print $product['image'] ?>" alt="Lights" width="150px">
-                  <div class="caption">
-                    <p style="text-align:center;"><?php print $product['name'] ?></p>
-                    <p style="text-align:center;color:#04B745;"><b>$<?php print $product['price'] ?></b></p>
-                    <form method="post" action="products.php?action=addcart">
-                      <p style="text-align:center;color:#04B745;">
-                        <button type="submit" class="btn btn-warning">Add To Cart</button>
-                        <input type="hidden" name="sku" value="<?php print $product['sku'] ?>">
-                      </p>
-                    </form>
-                  </div>
-                </div>
-              </div>
-            <?php endforeach; ?>
+      
 
 
 
