@@ -73,14 +73,9 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		<!-- Page Wrapper -->
 		<div class="page-wrapper">
 
-			<!-- Page Content -->
-			<div class="content container-fluid">
-
-
-			</div>
 			<!-- /Page Header -->
 
-			<div class="container-fluid" style="width:100%;">
+			<div class="container-fluid">
 
 				<nav class="navbar navbar-inverse" style="background:#04B745;">
 					<div class="container-fluid pull-left" style="width:300px;">
