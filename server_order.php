@@ -30,6 +30,7 @@ $filtered_rows = $statement->rowCount();
 foreach ($result as $row) {
 
   $orders .= '<tr>
+        <td> <input type="checkbox"  data-id="' . $row['cart_id'] . '" /> </td>
         <td> <img src="'  . $row['image'] . '" width="50"> </td>
         <td> <div class="display_name"> ' . $row['name'] . '</div> </td>
         <td> ' . $row['qty'] . ' </td> 
@@ -38,7 +39,6 @@ foreach ($result as $row) {
         <td>  ' . '$' . number_format((float)$row['qty'] * $row['cart_price'], 2, '.', '') . '</td> 
         <td>
         <button class="btn btn-danger btn-sm cancel" id="cancel" data-id="' . $row['cart_id'] . '" > Cancel </button> 
-      
         </td>
       </tr>';
 }

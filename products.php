@@ -163,6 +163,7 @@ $products = $stmt->fetchAll();
           <table class="table table-striped" id="cart_table">
             <thead>
               <tr>
+
                 <th>Image</th>
                 <th>Name</th>
                 <th colspan="2">Qty</th>
@@ -198,14 +199,15 @@ $products = $stmt->fetchAll();
         <div class="row">
           <div class="container-fluid" style="width:100%;">
 
+
             <?php foreach ($products as $product) : ?>
               <div class="col-md-3" style="float:left;">
                 <div class="thumbnail"> <img src="<?php print $product['image'] ?>" alt="Lights" width="150px">
                   <div class="caption">
-                    <p style="text-align:center;"><?php print $product['name'] ?></p>
-                    <p style="text-align:center;color:#04B745;"><b>$<?php print $product['price'] ?></b></p>
+                    <p style="text-align:left;"><?php print $product['name'] ?></p>
+                    <p style="text-align:left;color:#04B745;"><b>$<?php print $product['price'] ?></b></p>
                     <form method="post" action="products.php?action=addcart">
-                      <p style="text-align:center;color:#04B745;">
+                      <p style="text-align:left;color:#04B745;">
                         <button type="submit" class="btn btn-warning">Add To Cart</button>
                         <input type="hidden" name="sku" value="<?php print $product['sku'] ?>">
                       </p>
@@ -214,8 +216,6 @@ $products = $stmt->fetchAll();
                 </div>
               </div>
             <?php endforeach; ?>
-
-
 
 
 

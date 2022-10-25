@@ -51,6 +51,10 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 	<!-- Main CSS -->
 	<link rel="stylesheet" href="assets/css/style.css">
 	<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
+
+	<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/select/1.4.0/css/select.dataTables.min.css">
+
+
 	<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	<!--[if lt IE 9]>
 			<script src="assets/js/html5shiv.min.js"></script>
@@ -90,9 +94,10 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 				</nav>
 
 				<div class="container-fluid" style="width:100%; margin: 10px;">
-					<table class="table table-striped" id="order_table">
+					<table class="" id="order_table">
 						<thead>
 							<tr>
+								<th></th>
 								<th>Image</th>
 								<th>Name</th>
 								<th>Qty</th>
@@ -102,8 +107,6 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 							</tr>
 						</thead>
 
-
-
 						<tbody>
 							<?php echo $orders; ?>
 						</tbody>
@@ -111,12 +114,12 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 					</table>
 
 
-
-
-
-
-
 				</div>
+
+				<div class="container-fluid" style="width:100%; margin: 10px;">
+					<button onclick="getSelected()" class="btn btn-primary">Check Out</button>
+				</div>
+
 
 			</div>
 			<!-- /Page Content -->
@@ -147,35 +150,92 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 	<script src="assets/js/app.js"></script>
 
 	<script src="//cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+	<script src="//cdn.datatables.net/select/1.4.0/js/dataTables.select.min.js"></script>
+
 
 	<script>
 		$(document).ready(function() {
-
-
 			$('#order_table').DataTable();
-
-
-			// var dataTable = $('#order_table').DataTable({
-			// 	"searching": true,
-			// 	"order": [],
-			// 	"ajax": {
-			// 		url: "server_order.php",
-			// 		type: "POST",
-			// 		data: {
-			// 			//action: 'listEmployee'
-			// 		},
-			// 		dataType: "json"
-			// 	},
-			// 	"columnDefs": [{
-			// 		"targets": [0, 3],
-			// 		"orderable": false,
-			// 	}, ],
-			// 	"pageLength": 10
-			// });
-
-
-
 		});
+
+
+
+		function getSelected() {
+			let table = $('#order_table').DataTable();
+			let arr = [];
+			let checkedvalues = table.$('input:checked').each(function() {
+				arr.push($(this).attr('data-id'))
+			});
+			arr = arr.toString();
+
+			if (arr == "") {
+				alert('You have not selected any items for checkout');
+			} else {
+				console.log(arr);
+			}
+
+
+		}
+
+
+
+		// 	$('#order_table').DataTable({ // <-- Need a curly brace here
+		// 		columnDefs: [{
+		// 			orderable: false,
+		// 			className: 'select-checkbox',
+		// 			targets: 0
+		// 		}],
+		// 		select: {
+		// 			style: 'os',
+		// 			selector: 'td:first-child'
+		// 		},
+		// 		order: [
+		// 			[1, 'asc']
+		// 		],
+
+
+
+		// 	});
+
+		// 	//datatable has to be initialized to a variable
+		// 	var myTable = $('#order_table').dataTable();
+
+		// 	//checkboxes should have a general class to traverse
+		// 	var rowcollection = myTable.$(".call-checkbox:checked", {
+		// 		"page": "all"
+		// 	});
+
+		// 	//Now loop through all the selected checkboxes to perform desired actions
+		// 	rowcollection.each(function(index, elem) {
+		// 		//You have access to the current iterating row
+		// 		var checkbox_value = $(elem).val();
+		// 		//Do something with 'checkbox_value'
+		// 	});
+		// });
+
+
+
+		// var dataTable = $('#order_table').DataTable({
+		// 	"searching": true,
+		// 	"order": [],
+		// 	"ajax": {
+		// 		url: "server_order.php",
+		// 		type: "POST",
+		// 		data: {
+		// 			//action: 'listEmployee'
+		// 		},
+		// 		dataType: "json"
+		// 	},
+		// 	"columnDefs": [{
+		// 		"targets": [0, 3],
+		// 		"orderable": false,
+		// 	}, ],
+		// 	"pageLength": 10
+		// });
+
+
+
+
 
 
 
@@ -204,6 +264,13 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 				}
 
 			});
+		});
+
+
+
+
+		$(document).ready(function() {
+
 		});
 	</script>
 

@@ -25,6 +25,13 @@ $stmt = $conn->prepare($query);
 $stmt->execute();
 $result = $stmt->fetchAll();
 
+
+
+// Retrieve products from products table
+
+
+
+
 if (isset($_GET['delete'])) {
   $cart_id = $_GET['id'];
   $sql = "DELETE FROM cart WHERE cart_id = $cart_id";
@@ -119,6 +126,11 @@ if (isset($_GET['submit'])) {
 
 
 
+
+
+
+
+
 foreach ($result as $row) {
 
   if ($row['qty'] === 1) {
@@ -148,5 +160,48 @@ foreach ($result as $row) {
         <button class="btn btn-success btn-sm submit" data-id="' . $row['cart_id'] . '" >  <i class="fa fa-check"></i>  Order </button>
         </td>
       </tr>';
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+if (isset($_GET['product'])) {
+
+
+
+
+  $query_ = "SELECT *, c.price as cart_price FROM cart AS c LEFT JOIN products p ON c.product_sku = p.sku WHERE client_id = '$id' AND STATUS = 1 ORDER BY c.add_to_cart_date DESC";
+  $stmt_ = $conn->prepare($query_);
+  $stmt_->execute();
+  $result_products = $stmt_->fetchAll();
+
+
+
+  foreach ($result_products as $row) {
+    $products .= '<div class="col-md-3" style="float:left;">
+    <div class="thumbnail"> <img src="' . $row['image'] . '" alt="Lights" width="150px">
+      <div class="caption">
+        <p style="text-align:center;">' . $row['name'] . '</p>
+        <p style="text-align:center;color:#04B745;"><b> $' . $row['price'] . '</b></p>
+
+          <p style="text-align:center;color:#04B745;">
+            <button type="button" id="add_cart" class="btn btn-warning">Add To Cart</button>
+            <input type="text" name="sku" id="product_sku" data-id="' . $row['sku'] . '" value="' . $row['sku'] . '">
+          </p>
+
+      </div>
+    </div>
+  </div>';
   }
 }
