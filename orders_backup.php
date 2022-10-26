@@ -121,11 +121,6 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 				</div>
 
 
-
-
-
-
-
 			</div>
 			<!-- /Page Content -->
 
@@ -133,47 +128,6 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		<!-- /Page Wrapper -->
 
 	</div>
-
-
-
-	<div class="modal" id="dataModal" tabindex="-1" role="dialog">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title">Check Out Details</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body" id="checkout_detail">
-
-				</div>
-
-
-
-
-				<div class="modal-body">
-					<br>
-					<label>Payment Method</label>
-					<select class="form-control" id="paymentMethod">
-						<option value="" selected disabled> -- Select Payment Method -- </option>
-						<option value="0">Cash on Delivery</option>
-						<option value="1">G-Cash</option>
-					</select>
-				</div>
-
-				<div class="modal-footer">
-					<button type="button" id="confirm_checkout" class="btn btn-success">Confirm</button>
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-				</div>
-			</div>
-		</div>
-	</div>
-
-
-
-
-
 	<!-- /Main Wrapper -->
 
 	<!-- javascript links starts here -->
@@ -197,7 +151,7 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 	<script src="//cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
 	<script src="//cdn.datatables.net/select/1.4.0/js/dataTables.select.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+
 
 	<script>
 		$(document).ready(function() {
@@ -215,14 +169,7 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 			arr = arr.toString();
 
 			if (arr == "") {
-
-				swal({
-					position: "top-end",
-					icon: 'error',
-					title: "You have not selected any items for checkout",
-					showConfirmButton: false,
-					timer: 2000
-				})
+				alert('You have not selected any items for checkout');
 			} else {
 				$.ajax({
 					url: 'server_order.php',
@@ -231,57 +178,9 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 						'checkout': 1,
 						'id': arr
 					},
-					success: function(data) {
-						$('#checkout_detail').html(data);
-						$('#dataModal').modal('show');
+					success: function(response) {
+						alert(response.cart_id);
 
-						$(document).on('click', '#confirm_checkout', function() {
-
-							var payment = $('#paymentMethod').val();
-							if (payment == null) {
-								swal({
-									position: "top-end",
-									icon: 'error',
-									title: "You have not selected any payment method",
-									showConfirmButton: false,
-									timer: 2000
-								})
-
-
-								//alert('You have not selected any payment method');
-							} else {
-								//alert(payment);
-
-								$.ajax({
-									url: 'server_order.php',
-									type: 'GET',
-									data: {
-										'confirmCheckout': 1,
-										'id': arr,
-										'payment': payment
-									},
-									success: function(response) {
-										$('#dataModal').modal('hide');
-										swal({
-											position: "top-end",
-											icon: 'success',
-											title: "Order success, delivery on progress",
-											showConfirmButton: false,
-											timer: 2000
-										})
-										setTimeout(function() {
-											window.location.reload();
-										}, 2000);
-
-									}
-
-								});
-							}
-
-						});
-
-						//	alert(arr);
-						//$('#GFG_DOWN').text(array);
 						//location.reload();
 					}
 
@@ -292,6 +191,60 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		}
 
 
+
+		// 	$('#order_table').DataTable({ // <-- Need a curly brace here
+		// 		columnDefs: [{
+		// 			orderable: false,
+		// 			className: 'select-checkbox',
+		// 			targets: 0
+		// 		}],
+		// 		select: {
+		// 			style: 'os',
+		// 			selector: 'td:first-child'
+		// 		},
+		// 		order: [
+		// 			[1, 'asc']
+		// 		],
+
+
+
+		// 	});
+
+		// 	//datatable has to be initialized to a variable
+		// 	var myTable = $('#order_table').dataTable();
+
+		// 	//checkboxes should have a general class to traverse
+		// 	var rowcollection = myTable.$(".call-checkbox:checked", {
+		// 		"page": "all"
+		// 	});
+
+		// 	//Now loop through all the selected checkboxes to perform desired actions
+		// 	rowcollection.each(function(index, elem) {
+		// 		//You have access to the current iterating row
+		// 		var checkbox_value = $(elem).val();
+		// 		//Do something with 'checkbox_value'
+		// 	});
+		// });
+
+
+
+		// var dataTable = $('#order_table').DataTable({
+		// 	"searching": true,
+		// 	"order": [],
+		// 	"ajax": {
+		// 		url: "server_order.php",
+		// 		type: "POST",
+		// 		data: {
+		// 			//action: 'listEmployee'
+		// 		},
+		// 		dataType: "json"
+		// 	},
+		// 	"columnDefs": [{
+		// 		"targets": [0, 3],
+		// 		"orderable": false,
+		// 	}, ],
+		// 	"pageLength": 10
+		// });
 
 
 

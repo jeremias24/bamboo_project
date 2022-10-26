@@ -246,6 +246,7 @@ $products = $stmt->fetchAll();
                     'id': id,
                 },
                 success: function(response) {
+
                     location.reload();
                 }
 

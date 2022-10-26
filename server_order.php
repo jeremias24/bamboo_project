@@ -24,7 +24,7 @@ $data = array();
 $filtered_rows = $statement->rowCount();
 
 
-
+$orders = "";
 
 
 foreach ($result as $row) {
@@ -64,4 +64,88 @@ if (isset($_GET['cancel'])) {
   $stmt = $conn->prepare($sql);
   $stmt->execute();
   exit();
+}
+
+$output = "";
+
+if (isset($_GET['checkout'])) {
+
+  $checkout = "";
+  $total = 0;
+
+  $cart_id = $_GET['id'];
+  //$checkout = explode(",", $cart_id);
+
+  //echo json_encode($cart_id);
+
+  // $cart_id = array(56, 58);
+  // $checkout = implode(",", $cart_id);
+
+
+
+
+  $sql = " SELECT *, c.price as cart_price FROM cart AS c LEFT JOIN products p ON c.product_sku = p.sku WHERE cart_id IN ( $cart_id ) ";
+  //$sql = "SELECT cart_id, product_sku, qty, price FROM cart WHERE cart_id IN ( $cart_id ) ";
+  $stmt = $conn->prepare($sql);
+  $stmt->execute();
+  $result = $stmt->fetchAll();
+
+
+
+  $output .= '  
+  <div class="table-responsive">  
+       <table class="table table-bordered">
+       <tr>
+       <td><label>Product</label></td> 
+       <td><label>Qty</label></td> 
+       <td><label>Unit Price</label></td>
+       <td><label>Amount</label></td>
+       </tr> ';
+
+
+
+  foreach ($result as $row) {
+
+    $total += $row["qty"] * $row['cart_price'];
+
+    $output .= '  
+              <tr>  
+                  <td>' . $row["name"] . '</td>  
+                  <td>' . $row["qty"] . '</td>  
+                  <td>' . '$' . number_format((float) $row['cart_price'], 2, '.', '') . '</td>  
+                  <td>' . '$' . number_format((float) $row["qty"] * $row['cart_price'], 2, '.', '') . '</td>  
+              </tr>  
+        ';
+  }
+
+  $output .= '  
+       </table>  
+  </div>  
+  <div class="float-right">
+    <label>Total Amount</label>
+    <input type="text" value="' . '$' . number_format((float) $total, 2, '.', '') . '" style="direction: rtl;" readonly />
+  </div>
+ 
+
+
+
+  ';
+  echo $output;
+}
+
+
+if (isset($_GET['confirmCheckout'])) {
+  $cart_id = $_GET['id'];
+  $payment = $_GET['payment'];
+
+
+
+  $sql = "UPDATE  cart SET status = 3, pay_method = '$payment', paid_date = '$date' WHERE cart_id IN ($cart_id)";
+  $stmt = $conn->prepare($sql);
+  $stmt->execute();
+  exit();
+
+
+  // var_dump($cart_id, $payment);
+  // die();
 }
