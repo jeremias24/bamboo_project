@@ -28,23 +28,21 @@ CREATE TABLE `cart` (
   `client_id` int(11) NOT NULL,
   `status` int(3) NOT NULL,
   `add_to_cart_date` datetime DEFAULT NULL,
+  `pay_method` varchar(50) DEFAULT NULL,
   `order_date` datetime DEFAULT NULL,
+  `paid_date` datetime DEFAULT NULL,
   PRIMARY KEY (`cart_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=62 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `cart` */
 
-insert  into `cart`(`cart_id`,`product_sku`,`qty`,`price`,`client_id`,`status`,`add_to_cart_date`,`order_date`) values 
-(23,'BAM001',1,100.00,2,0,'2022-10-11 16:16:38','2022-10-17 04:15:41'),
-(27,'BAM001',3,150.00,2,2,'2022-10-10 16:16:39','0000-00-00 00:00:00'),
-(28,'BAM003',6,180.00,2,2,'2022-10-11 16:16:43','2022-10-17 01:06:59'),
-(29,'BAM002',2,150.00,2,2,'2022-10-11 16:16:47','2022-10-17 01:14:16'),
-(30,'BAM003',2,180.00,2,2,'2022-10-12 16:16:50','2022-10-17 01:10:15'),
-(32,'BAM003',1,180.00,2,2,'2022-10-17 01:12:22','2022-10-17 01:12:45'),
-(34,'BAM003',1,180.00,2,2,'2022-10-17 01:14:23','2022-10-17 04:02:07'),
-(35,'BAM001',1,200.00,2,1,'2022-10-17 01:14:25',NULL),
-(36,'BAM003',2,180.00,2,1,'2022-10-17 03:36:28',NULL),
-(37,'BAM003',1,180.00,2,1,'2022-10-17 04:02:13',NULL);
+insert  into `cart`(`cart_id`,`product_sku`,`qty`,`price`,`client_id`,`status`,`add_to_cart_date`,`pay_method`,`order_date`,`paid_date`) values 
+(55,'BAM001',1,200.00,2,0,'2022-10-25 03:39:09',NULL,'2022-10-25 03:42:10',NULL),
+(56,'BAM001',1,200.00,2,3,'2022-10-25 03:42:02','0','2022-10-25 03:42:14','2022-10-26 08:01:32'),
+(58,'BAM002',1,150.00,2,3,'2022-10-25 03:42:07','0','2022-10-25 03:42:12','2022-10-26 08:01:32'),
+(59,'BAM002',1,150.00,2,1,'2022-10-25 03:42:26',NULL,NULL,NULL),
+(60,'BAM002',2,150.00,2,3,'2022-10-25 03:42:27','1','2022-10-25 08:10:05','2022-10-26 08:01:20'),
+(61,'BAM002',1,150.00,2,1,'2022-10-25 03:42:27',NULL,NULL,NULL);
 
 /*Table structure for table `clients` */
 
